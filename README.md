@@ -21,4 +21,7 @@ This work was kindly supported by the Swiss National Science Foundation (grant n
 
 [Andreas Loukas](https://andreasloukas.wordpress.com)
 
+[![DOI](https://zenodo.org/badge/175851068.svg)](https://zenodo.org/badge/latestdoi/175851068)
+
 Released under the MIT license 
+
