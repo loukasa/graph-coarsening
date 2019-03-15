@@ -1,7 +1,7 @@
 # graph-coarsening
 Multilevel graph coarsening algorithm with spectral and cut guarantees
 
-The code accompanies the paper: [Graph reduction by spectral and cut guarantees](https://arxiv.org/abs/1808.10650) published in JMLR/2019.
+The code accompanies the paper: [Graph reduction with spectral and cut guarantees](https://arxiv.org/abs/1808.10650) published in JMLR/2019.
 
 There are four python notebooks included: 
 
