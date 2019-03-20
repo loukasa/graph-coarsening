@@ -23,5 +23,5 @@ This work was kindly supported by the Swiss National Science Foundation (grant n
 
 [![DOI](https://zenodo.org/badge/175851068.svg)](https://zenodo.org/badge/latestdoi/175851068)
 
-Released under the MIT license 
+Released under the Apache license 2.0 
 
