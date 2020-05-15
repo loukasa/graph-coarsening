@@ -3,15 +3,15 @@ Multilevel graph coarsening algorithm with spectral and cut guarantees
 
 The code accompanies the paper: [Graph reduction with spectral and cut guarantees](https://arxiv.org/abs/1808.10650) published  at JMLR/2019.
 
-There are four python notebooks included: 
+There are four python notebooks included under `examples`:
 
 * The "coarsening_demo.ipynb" demonstrates how the code can be used with a toy example (see also [this blogpost](https://andreasloukas.blog/2018/11/05/multilevel-graph-coarsening-with-spectral-and-cut-guarantees/)).
 * The "experiment_approximation.ipynb" reproduces the results of Section 5.1
 * The "experiment_spectrum.ipynb" reproduces the results of Section 5.2
 * The "experiment_scalability.ipynb" reproduces the results of Section 5.3
 
-Since I have not fixed the random seed, some small variance should be expected in the experiment output. 
- 
+Since I have not fixed the random seed, some small variance should be expected in the experiment output.
+
 
 Depedencies: pygsp, matplotlib, numpy, scipy, networkx, sortedcontainers
 
@@ -23,5 +23,4 @@ This work was kindly supported by the Swiss National Science Foundation (grant n
 
 [![DOI](https://zenodo.org/badge/175851068.svg)](https://zenodo.org/badge/latestdoi/175851068)
 
-Released under the Apache license 2.0 
-
+Released under the Apache license 2.0
