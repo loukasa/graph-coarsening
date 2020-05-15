@@ -20,11 +20,13 @@ There are five python notebooks included under `examples`:
 Since I have not fixed the random seed, some small variance should be expected in the experiment output.
 
 ## Installation instructions: 
-`
-git clone git@github.com:loukasa/graph-coarsening.git
-cd graph-coarsening
-pip install .
-`
+
+`git clone git@github.com:loukasa/graph-coarsening.git`
+
+`cd graph-coarsening`
+
+`pip install .`
+
 (depedencies: pygsp, matplotlib, numpy, scipy, networkx, sortedcontainers)
 
 ## Acknowledgements
