@@ -8,6 +8,7 @@ install_requires = [
     "pygsp",
     "matplotlib",
     "sortedcontainers",
+    "networkx"
 ]
 
 version_py = os.path.join(os.path.dirname(__file__), "graph_coarsening", "version.py")
@@ -20,7 +21,7 @@ setup(
     version=version,
     description="graph_coarsening",
     author="Andreas Loukas",
-    author_email="Andreas.Loukas@epfl.ch",
+    author_email="andreas.loukas@epfl.ch",
     packages=find_packages(),
     license="Apache License 2.0",
     install_requires=install_requires,

@@ -1,6 +1,10 @@
 import numpy as np
 import pygsp as gsp
+import networkx as nx
 
+def to_networkx():
+    return nx.from_scipy_sparse_matrix(G.W)
+    
 def get_neighbors(G, i):
     return G.A[i,:].indices
     # return np.arange(G.N)[np.array((G.W[i,:] > 0).todense())[0]]

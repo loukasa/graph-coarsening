@@ -17,8 +17,8 @@ def coarsen(
     G,
     K=10,
     r=0.5,
-    max_levels=20,
-    method="variation_edges",
+    max_levels=10,
+    method="variation_neighborhood",
     algorithm="greedy",
     Uk=None,
     lk=None,
@@ -34,7 +34,9 @@ def coarsen(
         The size of the subspace we are interested in preserving.
     r : float between (0,1)
         The desired reduction defined as 1 - n/N.
-
+    method : String
+        ['variation_neighborhoods', 'variation_edges', 'variation_cliques', 'heavy_edge', 'algebraic_JC', 'affinity_GS', 'kron'] 
+    
     Returns
     -------
     C : np.array of size n x N
@@ -130,12 +132,9 @@ def coarsen(
         C = iC.dot(C)
         Call.append(iC)
 
-        Wc = graph_utils.zero_diag(
-            coarsen_matrix(G.W, iC)
-        )  # coarsen and remove self-loops
-        Wc = (
-            Wc + Wc.T
-        ) / 2  # this is only needed to avoid pygsp complaining for tiny errors
+        Wc = graph_utils.zero_diag(coarsen_matrix(G.W, iC))  # coarsen and remove self-loops
+        Wc = (Wc + Wc.T) / 2  # this is only needed to avoid pygsp complaining for tiny errors
+
         if not hasattr(G, "coords"):
             Gc = gsp.graphs.Graph(Wc)
         else:

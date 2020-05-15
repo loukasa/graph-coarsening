@@ -1,6 +1,7 @@
 import numpy as np
 import scipy as sp
 import pygsp as gsp
+import networkx as nx
 
 import os
 import tempfile
@@ -52,7 +53,7 @@ def real(N, graph_name, connected=True):
 	Parameters:
 	----------
 	N : int
-	    The number of nodes.
+	    The number of nodes. Set N=-1 to return the entire graph.
 
 	graph_name : a string
         Use to select which graph is returned. Choices include
@@ -102,9 +103,18 @@ def real(N, graph_name, connected=True):
         if connected == False or G.is_connected():
             break
         if tries > 1:
-            print("WARNING: disconnected graph.. trying to use the giant component")
+            print("WARNING: Disconnected graph. Using the giant component.")
             G, _ = graph_utils.get_giant_component(G)
             break
+            
+    if not hasattr(G, 'coords'): 
+        try:
+            graph = nx.from_scipy_sparse_matrix(G.W)
+            pos = nx.nx_agraph.graphviz_layout(graph, prog='neato')  
+            G.set_coordinates(np.array(list(pos.values()))) 
+        except ImportError:
+            G.set_coordinates()
+        
     return G
 
 
