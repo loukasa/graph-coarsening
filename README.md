@@ -23,13 +23,14 @@ Since I have not fixed the random seed, some small variance should be expected i
 
 ## Installation instructions: 
 
-`git clone git@github.com:loukasa/graph-coarsening.git`
+```
+git clone git@github.com:loukasa/graph-coarsening.git
+cd graph-coarsening
+pip install .
+```
 
-`cd graph-coarsening`
-
-`pip install .`
-
-(depedencies: pygsp, matplotlib, numpy, scipy, networkx, sortedcontainers)
+Dependencies: pygsp, matplotlib, numpy, scipy, sortedcontainers
+Optional dependency: networkx
 
 ## Citation
 
