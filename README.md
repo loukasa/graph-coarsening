@@ -2,7 +2,7 @@
 
 Multilevel graph coarsening algorithm with spectral and cut guarantees.
 
-The code accompanies paper [Graph reduction with spectral and cut guarantees](http://www.jmlr.org/papers/volume20/18-680/18-680.pdf) by Andreas Loukas published at JMLR/2019 ([bibtex](http://www.jmlr.org/papers/v20/18-680.bib)).
+The code accompanies paper [Graph reduction with spectral and cut guarantees](http://www.jmlr.org/papers/volume20/18-680/18-680.pdf) by Andreas Loukas published at JMLR/2019.
 
 In addition to the introduced [**variation**](http://www.jmlr.org/papers/volume20/18-680/18-680.pdf) methods, the code provides implementations of [**heavy-edge matching**](http://proceedings.mlr.press/v80/loukas18a.html), [**algebraic distance**](https://epubs.siam.org/doi/abs/10.1137/100791142?casa_token=tReVSPG0pBIAAAAA:P3BxPcyiSNkuxP5mOz8s9I7CN1tFQaMUTjyVHvb7PphqsGDy91ybcmAmECTYOeN2l-ErcpXuuA), [**affinity**](https://epubs.siam.org/doi/abs/10.1137/110843563?mobileUi=0), and [**Kron reduction**](http://motion.me.ucsb.edu/pdf/2011d-db.pdf) (adapted from [pygsp](https://pygsp.readthedocs.io/en/stable)).   
 
@@ -30,6 +30,22 @@ Since I have not fixed the random seed, some small variance should be expected i
 `pip install .`
 
 (depedencies: pygsp, matplotlib, numpy, scipy, networkx, sortedcontainers)
+
+## Citation
+
+If you use this code, please cite: 
+```
+@article{JMLR:v20:18-680,
+  author  = {Andreas Loukas},
+  title   = {Graph Reduction with Spectral and Cut Guarantees},
+  journal = {Journal of Machine Learning Research},
+  year    = {2019},
+  volume  = {20},
+  number  = {116},
+  pages   = {1-42},
+  url     = {http://jmlr.org/papers/v20/18-680.html}
+}
+```
 
 ## Acknowledgements
 
