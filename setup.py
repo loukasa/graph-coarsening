@@ -8,7 +8,6 @@ install_requires = [
     "pygsp",
     "matplotlib",
     "sortedcontainers",
-    "networkx"
 ]
 
 version_py = os.path.join(os.path.dirname(__file__), "graph_coarsening", "version.py")

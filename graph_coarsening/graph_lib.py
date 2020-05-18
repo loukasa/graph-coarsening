@@ -1,7 +1,6 @@
 import numpy as np
 import scipy as sp
 import pygsp as gsp
-import networkx as nx
 
 import os
 import tempfile
@@ -109,6 +108,7 @@ def real(N, graph_name, connected=True):
             
     if not hasattr(G, 'coords'): 
         try:
+            import networkx as nx
             graph = nx.from_scipy_sparse_matrix(G.W)
             pos = nx.nx_agraph.graphviz_layout(graph, prog='neato')  
             G.set_coordinates(np.array(list(pos.values()))) 
