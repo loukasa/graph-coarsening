@@ -81,7 +81,8 @@ def zero_diag(A):
     import scipy as sp
 
     if sp.sparse.issparse(A):
-        return A - sp.sparse.dia_matrix((A.diagonal()[sp.newaxis, :], [0]), shape=(A.shape[0], A.shape[1]))
+        # return A - sp.sparse.dia_matrix((A.diagonal()[sp.newaxis, :], [0]), shape=(A.shape[0], A.shape[1]))
+        return A - sp.sparse.dia_matrix((A.diagonal()[np.newaxis, :], [0]), shape=(A.shape[0], A.shape[1]))
     else:
         D = A.diagonal()
         return A - np.diag(D)

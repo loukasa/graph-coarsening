@@ -52,6 +52,8 @@ def coarsen(
     -------
     C, Gc, Call, Gall = coarsen(G, K=10, r=0.8)
     """
+
+    print("Coarsening graph begin")
     r = np.clip(r, 0, 0.999)
     G0 = G
     N = G.N
@@ -65,9 +67,23 @@ def coarsen(
     Call, Gall = [], []
     Gall.append(G)
 
+    # print("number of nodes", G.N)
+
     for level in range(1, max_levels + 1):
 
+        # print("Nodes and their attributes in G:")
+        # for i in range(G.N):
+        #     print(f"Node {i}:")
+        #     if hasattr(G, 'coords'):
+        #         print(f"  Coordinates: {G.coords[i]}")
+        #     if hasattr(G, 'signals'):
+        #         print(f"  Signals: {G.signals[i]}")
+        #     if hasattr(G, 'labels'):
+        #         print(f"  Labels: {G.labels[i]}")
+        # print("number of nodes", Gc.N)
         G = Gc
+
+        
 
         # how much more we need to reduce the current graph
         r_cur = np.clip(1 - n_target / n, 0.0, max_level_r)
@@ -110,7 +126,7 @@ def coarsen(
                 coarsening_list = contract_variation_linear(
                     G, K=K, A=A, r=r_cur, mode=method
                 )
-
+            # print("number of nodes", G.N)
         else:
             weights = get_proximity_measure(G, method, K=K)
 
@@ -123,18 +139,20 @@ def coarsen(
 
             elif algorithm == "greedy":
                 coarsening_list = matching_greedy(G, weights=weights, r=r_cur)
-
+            # print("number of nodes", G.N) # no se reduce el numero de nodos
         iC = get_coarsening_matrix(G, coarsening_list)
-
+        # print("number of nodes", G.N) # no se reduce el numero de nodos
         if iC.shape[1] - iC.shape[0] <= 2:
             break  # avoid too many levels for so few nodes
 
         C = iC.dot(C)
         Call.append(iC)
-
-        Wc = graph_utils.zero_diag(coarsen_matrix(G.W, iC))  # coarsen and remove self-loops
+        # print("number of nodes", G.N)
+        Wc = graph_utils.zero_diag(coarsen_matrix(G.W, iC))  # coarsen and remove self-loops, acá se reduce el grafo
         Wc = (Wc + Wc.T) / 2  # this is only needed to avoid pygsp complaining for tiny errors
-
+        
+        # en este punto es que debería actualizar etiquetas de los nodos: G tiene el grafo anterior a la reducción, 
+        # Wc tiene las nuevas dimensiones reducidas
         if not hasattr(G, "coords"):
             Gc = gsp.graphs.Graph(Wc)
         else:
@@ -142,10 +160,33 @@ def coarsen(
         Gall.append(Gc)
 
         n = Gc.N
-
+        # print("number of nodes", Gc.N) # se reduce el numero de nodos
         if n <= n_target:
             break
+    
 
+    # print("Vertices and their adjacent vertices in Gc:")
+    # for i in range(Gc.N):
+    #     neighbors = Gc.get_edge_list()[0][Gc.get_edge_list()[1] == i]
+    #     print(f"Vertex {i}: {neighbors}")
+
+    
+    # print("\nAdjacency lists of all graphs in Gall:")
+    # for level, graph in enumerate(Gall):
+    #     print(f"\nGraph at level {level}:")
+    #     for i in range(graph.N):
+    #         neighbors = graph.get_edge_list()[0][graph.get_edge_list()[1] == i]
+    #         print(f"Vertex {i}: {neighbors}")
+
+
+
+    # print("\nProperties of indices in the sparse matrices within Call:")
+    # for level, C in enumerate(Call):
+    #     print(f"\nLevel {level}:")
+    #     print(f"  Indices: {C.indices}")
+    #     print(f"  Indptr: {C.indptr}")
+
+    print("Coarsening graph END")
     return C, Gc, Call, Gall
 
 
@@ -369,7 +410,8 @@ def plot_coarsening(
                     y[edges[:, eIdx]],
                     color="k",
                     alpha=alpha,
-                    lineWidth=edge_width,
+                    # lineWidth=edge_width,
+                    linewidth=edge_width,
                 )
             for i in range(Gc.N):
                 subgraph = np.arange(G.N)[C[i, :] > 0]
@@ -393,7 +435,8 @@ def plot_coarsening(
                     zs=z[edges[:, eIdx]],
                     color="k",
                     alpha=alpha,
-                    lineWidth=edge_width,
+                    # lineWidth=edge_width,
+                    linewidth=edge_width,
                 )
             for i in range(Gc.N):
                 subgraph = np.arange(G.N)[C[i, :] > 0]
@@ -421,7 +464,8 @@ def plot_coarsening(
                 y[edges_c[:, eIdx]],
                 color="k",
                 alpha=alpha,
-                lineWidth=edge_width,
+                # lineWidth=edge_width,
+                linewidth=edge_width,
             )
 
     elif G.coords.shape[1] == 3:
@@ -436,7 +480,8 @@ def plot_coarsening(
                 z[edges_c[:, eIdx]],
                 color="k",
                 alpha=alpha,
-                lineWidth=edge_width,
+                # lineWidth=edge_width,
+                linewidth=edge_width,
             )
 
     ax.set_title(f"{title} | level = {n_levels}, n = {Gc.N}")
@@ -464,7 +509,8 @@ def contract_variation_edges(G, A=None, K=10, r=0.5, algorithm="greedy"):
 
     # cost function for the edge
     def subgraph_cost(G, A, edge):
-        edge, w = edge[:2].astype(np.int), edge[2]
+        # edge, w = edge[:2].astype(np.int), edge[2]
+        edge, w = edge[:2].astype(int), edge[2]
         deg_new = 2 * deg[edge] - w
         L = np.array([[deg_new[0], -w], [-w, deg_new[1]]])
         B = Pibot @ A[edge, :]
@@ -549,7 +595,8 @@ def contract_variation_linear(G, A=None, K=10, r=0.5, mode="neighborhood"):
     if "cliques" in mode:
         import networkx as nx
 
-        Gnx = nx.from_scipy_sparse_matrix(G.W)
+        # Gnx = nx.from_scipy_sparse_matrix(G.W)
+        Gnx = nx.from_scipy_sparse_array(G.W)
         for clique in nx.find_cliques(Gnx):
             family.append(CandidateSet(np.array(clique)))
 
@@ -666,7 +713,8 @@ def get_proximity_measure(G, name, K=10):
 
     # heuristic for mutligrid
     elif name == "algebraic_JC":
-        proximity += np.Inf
+        # proximity += np.Inf
+        proximity += np.inf
         for e in range(0, M):
             i, j = edges[:, e]
             for kIdx in range(num_vectors):
@@ -766,7 +814,8 @@ def get_proximity_measure(G, name, K=10):
 
         # heuristic for mutligrid (algebraic multigrid)
         elif name == "algebraic_GS":
-            proximity[e] = np.Inf
+            # proximity[e] = np.Inf
+            proximity[e] = np.inf
             for kIdx in range(num_vectors):
                 xk = X_gs[:, kIdx]
                 proximity[e] = min(
@@ -801,10 +850,12 @@ def generate_test_vectors(
 
     if method == "JC" or method == "Jacobi":
 
-        deg = G.dw.astype(np.float)
+        # deg = G.dw.astype(np.float)
+        deg = G.dw.astype(float)
         D = sp.sparse.diags(deg, 0)
         deginv = deg ** (-1)
-        deginv[deginv == np.Inf] = 0
+        # deginv[deginv == np.Inf] = 0
+        deginv[deginv == np.inf] = 0
         Dinv = sp.sparse.diags(deginv, 0)
         M = Dinv.dot(D - L)
 

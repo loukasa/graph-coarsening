@@ -1,3 +1,230 @@
-__pycache__
+venv/
+__pycache__/
 *.pyc
-.ipynb_checkpoints
+.vscode/
+unified_env/
+env/
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore build directories
+dist/
+build/
+
+# Ignore environment variable files
+.venv
+.venv.local
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+
+# Ignore compiled files
+*.out
+*.class
+*.o
+*.so
+
+# Ignore temporary files
+*.tmp
+*.swp
+*.bak
+
+# Ignore .txt, .csv, and .json files
+*.txt
+*.csv
+*.json
+*.gml
+*.xlsx
+*.png
+
+# Ignore Folders
+BigNets/
+final_results/
+AcademicNets/
+AcademicNetsResult/
+netGML(notCommunity)/
+netsToGephiWithComm/
+networkToGML/
+result_OLD/
+venv/
+__pycache__/
+*.pyc
+.vscode/
+unified_env/
+env/
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore build directories
+dist/
+build/
+
+# Ignore environment variable files
+.venv
+.venv.local
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+
+# Ignore compiled files
+*.out
+*.class
+*.o
+*.so
+
+# Ignore temporary files
+*.tmp
+*.swp
+*.bak
+
+# Ignore .txt, .csv, and .json files
+*.txt
+*.csv
+*.json
+*.gml
+*.xlsx
+
+# Ignore Folders
+BigNets/
+final_results/
+AcademicNets/
+AcademicNetsResult/
+netGML(notCommunity)/
+netsToGephiWithComm/
+networkToGML/
+result_OLD/
+venv/
+__pycache__/
+*.pyc
+.vscode/
+unified_env/
+env/
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore build directories
+dist/
+build/
+
+# Ignore environment variable files
+.venv
+.venv.local
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+
+# Ignore compiled files
+*.out
+*.class
+*.o
+*.so
+
+# Ignore temporary files
+*.tmp
+*.swp
+*.bak
+
+# Ignore .txt, .csv, and .json files
+*.txt
+*.csv
+*.json
+*.gml
+*.xlsx
+
+# Ignore Folders
+BigNets/
+final_results/
+AcademicNets/
+AcademicNetsResult/
+netGML(notCommunity)/
+netsToGephiWithComm/
+networkToGML/
+result_OLD/
+venv/
+__pycache__/
+*.pyc
+.vscode/
+unified_env/
+env/
+
+# Ignore node_modules directory
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore build directories
+dist/
+build/
+
+# Ignore environment variable files
+.venv
+.venv.local
+
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE specific files
+.vscode/
+.idea/
+
+# Ignore compiled files
+*.out
+*.class
+*.o
+*.so
+
+# Ignore temporary files
+*.tmp
+*.swp
+*.bak
+
+# Ignore .txt, .csv, and .json files
+*.txt
+*.csv
+*.json
+*.gml
+*.xlsx
+
+# Ignore Folders
+BigNets/
+BigNetsResults/
+final_results/
+AcademicsNets/
+academicsNetsResult/
+netGML(notCommunity)/
+netsToGephiWithComm/
+networkToGML/
+result_OLD/
+coarseNET.BigNetsResults/
+All_Networks/
+final_result - Copy/
+final_result/

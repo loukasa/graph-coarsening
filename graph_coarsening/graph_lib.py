@@ -12,6 +12,8 @@ from pygsp import graphs
 from scipy import sparse
 from urllib import request
 
+import networkx as nx
+
 _YEAST_URL = "http://nrvis.com/download/data/bio/bio-yeast.zip"
 _MOZILLA_HEADERS = [("User-Agent", "Mozilla/5.0")]
 
@@ -109,13 +111,111 @@ def real(N, graph_name, connected=True):
     if not hasattr(G, 'coords'): 
         try:
             import networkx as nx
-            graph = nx.from_scipy_sparse_matrix(G.W)
+            # graph = nx.from_scipy_sparse_matrix(G.W)
+            graph = nx.from_scipy_sparse_array(G.W)
             pos = nx.nx_agraph.graphviz_layout(graph, prog='neato')  
             G.set_coordinates(np.array(list(pos.values()))) 
         except ImportError:
             G.set_coordinates()
         
     return G
+
+def to_pygsp_graph(nx_graph):
+        """Converts a NetworkX graph to a PyGSP Graph."""
+        W = nx.to_scipy_sparse_array(nx_graph, format="csr")
+        G = graphs.Graph(W)
+        if not hasattr(G, "coords") or G.coords is None:
+            try:
+                pos = nx.nx_agraph.graphviz_layout(nx_graph, prog="neato")
+                G.set_coordinates(np.array(list(pos.values())))
+            except ImportError:
+                G.set_coordinates()
+        return G
+
+def bigNets(N, graph_name, connected=True):
+
+    nx_graph = nx.read_gml("/home/darian/graph-coarsening/BigNets/{graph_name}.gml")
+    G = to_pygsp_graph(nx_graph)
+
+    # Recortar nodos si se especifica un límite N
+    if N > 0 and N < G.N:
+        G = graphs.Graph(W=G.W[0:N, 0:N])
+        if hasattr(G, "coords") and G.coords is not None:
+            G.set_coordinates(G.coords[0:N, :])
+
+    # Asegurar conectividad si es necesario
+    if connected and not G.is_connected():
+        print(f"WARNING: {graph_name} is disconnected. Using the giant component.")
+        G, _ = graph_utils.get_giant_component(G)
+
+    return G
+
+
+def realAcademic(N, graph_name, connected=True):
+    """
+    A convenience method for loading academic graphs.
+
+    Parameters
+    ----------
+    N : int
+        The maximum number of nodes to consider. Set N=-1 to return the entire graph.
+    graph_name : str
+        Use to select which academic graph is returned. Choices include:
+            * karate_club
+            * dolphins
+            * political_books
+            * football
+    connected : bool
+        Set to True if only the giant component is to be returned.
+
+    Returns
+    -------
+    G : pygsp.graphs.Graph
+        The loaded graph as a PyGSP Graph object.
+    """
+
+    
+    
+    print(f"Loading academic graph: {graph_name}")
+
+    # Cargar grafos académicos
+    if graph_name == "karate":
+        nx_graph = nx.read_gml("/home/darian/graph-coarsening/AcademicsNets/karate.gml")
+        G = to_pygsp_graph(nx_graph)
+        # nx_graph = nx.karate_club_graph()
+        # for u, v, d in nx_graph.edges(data=True):
+        #     if 'weight' in d:
+        #         del d['weight']
+        # G = to_pygsp_graph(nx_graph)
+
+    elif graph_name == "dolphins":
+        nx_graph = nx.read_gml("/home/darian/graph-coarsening/AcademicsNets/dolphins.gml")
+        G = to_pygsp_graph(nx_graph)
+
+    elif graph_name == "polbooks":
+        nx_graph = nx.read_gml("/home/darian/graph-coarsening/AcademicsNets/polbooks.gml")
+        G = to_pygsp_graph(nx_graph)
+
+    elif graph_name == "football":
+        nx_graph = nx.read_gml("/home/darian/graph-coarsening/AcademicsNets/football.gml")
+        G = to_pygsp_graph(nx_graph)
+
+    else:
+        raise ValueError(f"Graph name '{graph_name}' not recognized.")
+
+    # Recortar nodos si se especifica un límite N
+    if N > 0 and N < G.N:
+        G = graphs.Graph(W=G.W[0:N, 0:N])
+        if hasattr(G, "coords") and G.coords is not None:
+            G.set_coordinates(G.coords[0:N, :])
+
+    # Asegurar conectividad si es necesario
+    if connected and not G.is_connected():
+        print(f"WARNING: {graph_name} is disconnected. Using the giant component.")
+        G, _ = graph_utils.get_giant_component(G)
+
+    return G
+
 
 
 def models(N, graph_name, connected=True, default_params=False, k=12, sigma=0.5):
